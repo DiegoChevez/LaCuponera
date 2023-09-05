@@ -1,13 +1,15 @@
 package com.LaCuponera.www.model.Login;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginModel {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/cuponerasv";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/lacuponera";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "";
 
-    public String authenticateUser(String email, String password) {
+    public Map<String, String> authenticateUser(String email, String password) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -16,15 +18,20 @@ public class LoginModel {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-            String query = "SELECT role_id FROM users WHERE email = ? AND password = ?";
+            String query = "SELECT  role_id, user_id, user_status FROM users WHERE email = ? AND password = ?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, email);
             stmt.setString(2, password);
 
             rs = stmt.executeQuery();
-            
+
             if (rs.next()) {
-                return rs.getString("role_id");
+                Map<String, String> result = new HashMap<>();
+                result.put("role_id", rs.getString("role_id"));
+                result.put("user_id", rs.getString("user_id"));
+                result.put("user_status", rs.getString("user_status"));
+                
+                return result;
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

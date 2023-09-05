@@ -12,8 +12,6 @@ public class AdministradorGC {
 		String duiC;
 		String statusC;
 		
-		
-		
 		public AdministradorGC() {
 			this.customerId = "";
 			this.userId = "";

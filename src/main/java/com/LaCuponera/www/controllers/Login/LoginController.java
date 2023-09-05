@@ -19,20 +19,29 @@ public class LoginController extends HttpServlet {
         
         // Llamar al modelo para autenticar al usuario
         LoginModel userModel = new LoginModel();
-        String role = userModel.authenticateUser(email, password);
+        Map<String, String> userAttributes = userModel.authenticateUser(email, password);
 
-        if (role != null) {
+        if (userAttributes != null) {
             HttpSession session = request.getSession();
-            session.setAttribute("email", email);
-            session.setAttribute("role", role);
-
+            
+            // Guardar role_id y user_id en la sesión
+            String role_id = userAttributes.get("role_id");
+            String user_id = userAttributes.get("user_id");
+            String user_status = userAttributes.get("user_status");
+            
+            session.setAttribute("role_id", role_id);
+            session.setAttribute("user_id", user_id);
+            session.setAttribute("user_status", user_status);
+            
             // Redirigir a la página correspondiente según el rol
-            if ("ADGRL-1586".equals(role)) {
+        	if("INACTIVO".equals(user_status)) {
+        		response.sendRedirect("index.jsp");
+        	}else if ("ADMIN-7874".equals(role_id)) {
                 response.sendRedirect("administrador/indexadmin.jsp");
-            } else if ("CLNTA-7841".equals(role)) {
-                response.sendRedirect("cliente.jsp");
-            } else if ("CMPNY-7841".equals(role)) {
-                response.sendRedirect("compania.jsp");
+            } else if ("CLNTE-4095".equals(role_id)) {
+                response.sendRedirect("cliente/indexcliente.jsp");
+            } else if ("COMPY-2436".equals(role_id)) {
+                response.sendRedirect("administradorEmpresaOfertante/indexAdminEO.jsp");
             }
         } else {
             // Autenticación fallida, redirigir de nuevo al formulario de inicio de sesión
