@@ -25,7 +25,7 @@
 						</ul>
 					</div>
 				</c:if>
-				<form role="form"
+		<form role="form"
 					action="${pageContext.request.contextPath}/administradorGR.do"
 					method="POST">
 					<input type="hidden" name="op" value="modificar" />
@@ -39,9 +39,10 @@ glyphicon-asterisk"></span>Campos
 						<label for="codigo">Codigo del autor</label>
 						<div class="input-group">
 							<input type="text" class="form-control" name="codigo" id="codigo"
-								value="${rubro.id}" placeholder="Ingresa el codigo del
-autor">
-							<span class="input-group-addon"><span
+								value="${rubro.id}" readonly
+								placeholder="Ingresa el codigo del
+autor"> <span
+								class="input-group-addon"><span
 								class="glyphicon
 glyphicon-asterisk"></span></span>
 						</div>
@@ -53,29 +54,28 @@ glyphicon-asterisk"></span></span>
 								value="${rubro.nombreRubro}"
 								placeholder="Ingresa el nombre del autor"> <span
 								class="input-group-addon"><span
-								class="glyphicon glyphicon-asterisk"></span></span>
+								class="glyphicon
+glyphicon-asterisk"></span></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="contacto">Nacionalidad del autor:</label>
-						<div class="form-group">
-							<label for="estatus">Nacionalidad del autor:</label>
-							<div class="input-group">
-								<select class="form-control" id="estatus" name="estatus">
-									<option value="INH0-41862">Invalido</option>
-									<option value="APR1-45289">Valido</option>
-								</select>
-							</div>
+						<div class="input-group">
+							<input type="text" class="form-control" id="contacto"
+								value="${rubro.estatusRubro}" name="estatus"
+								placeholder="Ingresa la nacionali-
+28
+dad del autor">
+							<span class="input-group-addon"><span
+								class="glyphicon
+glyphicon-asterisk"></span></span>
 						</div>
-						<span class="input-group-addon"><span
-							class="glyphicon glyphicon-asterisk"></span></span>
 					</div>
-			</div>
 
-			<input type="submit" class="btn btn-info" value="Guardar"
-				name="Guardar"> <a class="btn btn-danger"
-				href="${pageContext.request.contextPath}/administradorGR.do?op=listar">Cancelar</a>
-			</form>
+					<input type="submit" class="btn btn-info" value="Guardar"
+						name="Guardar"> <a class="btn btn-danger"
+						href="${pageContext.request.contextPath}/administradorGR.do?op=listar">Cancelar</a>
+				</form>
 		</div>
 	</div>
 	</div>

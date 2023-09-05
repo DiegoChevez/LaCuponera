@@ -8,6 +8,7 @@ if (role == null || !"ADGRL-1586".equals(role)) {
 	response.sendRedirect(request.getContextPath() + "/index.jsp");
 }
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +20,10 @@ if (role == null || !"ADGRL-1586".equals(role)) {
 
 	<a class="btn btn-primary"
 		href="${pageContext.request.contextPath}/administradorGR.do?op=listar"><span
-		class="glyphicon glyphicon-edit"></span> Ver todos los rubros</a>
+		class="glyphicon glyphicon-edit"></span> Gestionar rubros</a>
+		
+	<a class="btn btn-primary"
+		href="${pageContext.request.contextPath}/administradorGC.do?op=listar"><span
+		class="glyphicon glyphicon-edit"></span> Gestionar </a>
 </body>
 </html>

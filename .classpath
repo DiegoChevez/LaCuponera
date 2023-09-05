@@ -15,5 +15,7 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="C:/Users/cesar/eclipse-workspace/Servers/apache-tomcat-8.5.85/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="C:/Users/cesar/eclipse-workspace/Servers/apache-tomcat-8.5.85/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/dev_tools/activation-jaf1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/dev_tools/javax.mail.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

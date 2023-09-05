@@ -20,6 +20,10 @@ import com.LaCuponera.www.beans.Administrador.*;
 import com.LaCuponera.www.model.Administrador.*;
 import com.LaCuponera.www.utils.Validaciones;
 
+import com.LaCuponera.www.controllers.Administrador.AdministradorGRController;
+
+import com.LaCuponera.www.controllers.Administrador.*;
+
 /**
  *
  * @author Rafael Torres
@@ -152,6 +156,7 @@ public class AdministradorGRController extends HttpServlet {
 		try {
 			String codigo = request.getParameter("id");
 			AdministradorGR miRubro = modelo.obtenerRubro(codigo);
+			
 			if (miRubro != null) {
 				request.setAttribute("rubro", miRubro);
 				request.getRequestDispatcher("/administrador/editarRubro.jsp").forward(request, response);
@@ -168,41 +173,35 @@ public class AdministradorGRController extends HttpServlet {
 	private void modificar(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			listaErrores.clear();
-			AdministradorGR rubroAct = new AdministradorGR();
-			rubroAct.setId(request.getParameter("codigo"));
-			rubroAct.setNombreRubro(request.getParameter("nombre"));
-			rubroAct.setEstatusRubro(request.getParameter("nacionalidad"));
-			if (Validaciones.isEmpty(rubroAct.getId())) {
+			AdministradorGR miRubro = new AdministradorGR();
+			miRubro.setId(request.getParameter("codigo"));
+			miRubro.setNombreRubro(request.getParameter("nombre"));
+			miRubro.setEstatusRubro(request.getParameter("estatus"));
+			if (Validaciones.isEmpty(miRubro.getId())) {
 				listaErrores.add("El codigo del autor es obligatorio");
-			} else if (!Validaciones.esCodigoAutor(rubroAct.getId())) {
+			} else if (!Validaciones.esCodigoAutor(miRubro.getId())) {
 				listaErrores.add("El codigo de la autor debe tener el formato correcto AUT000");
 			}
-			if (Validaciones.isEmpty(rubroAct.getNombreRubro())) {
+			if (Validaciones.isEmpty(miRubro.getNombreRubro())) {
 				listaErrores.add("El nombre del autor es obligatorio");
 			}
-			if (Validaciones.isEmpty(rubroAct.getEstatusRubro())) {
+			if (Validaciones.isEmpty(miRubro.getEstatusRubro())) {
 				listaErrores.add("La nacionalidad es obligatoria");
 			}
 			if (listaErrores.size() > 0) {
 				request.setAttribute("listaErrores", listaErrores);
-
-				request.setAttribute("autor", rubroAct);
-
-				request.getRequestDispatcher("administradorGR.do?op=obtener").forward(request,
-
-						response);
+				request.setAttribute("rubro", miRubro);
+				request.getRequestDispatcher("administradorGR.do?op=obtener&id=" + miRubro.getId()).forward(request, response);
+				
 			} else {
-				if (modelo.modificarRubro(rubroAct) > 0) {
-
+				if (modelo.modificarRubro(miRubro) > 0) {
+					
 					request.getSession().setAttribute("exito", "autor modificado exitosamente");
-
 					response.sendRedirect(request.getContextPath() + "/administradorGR.do?op=listar");
-				}
-
-				else {
+					
+				} else {
 					request.getSession().setAttribute("fracaso",
 							"El autor no ha sido modificado" + "ya hay un autor con este codigo");
-
 					response.sendRedirect(request.getContextPath() + "/administradorGR.do?op=listar");
 				}
 			}
@@ -210,6 +209,7 @@ public class AdministradorGRController extends HttpServlet {
 			Logger.getLogger(AdministradorGRController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
+	
 
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) {
 		try {

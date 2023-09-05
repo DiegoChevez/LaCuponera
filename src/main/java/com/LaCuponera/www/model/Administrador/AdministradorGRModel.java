@@ -12,7 +12,7 @@ public class AdministradorGRModel extends Conexion {
 	public List<AdministradorGR> listarRubros() throws SQLException {
 		try {
 			List<AdministradorGR> lista = new ArrayList<AdministradorGR>();
-			String sql = "CALL sp_rubrosList()";
+			String sql = "CALL SelectIndustriesList()";
 			this.conectar();
 			cs = conexion.prepareCall(sql);
 			rs = cs.executeQuery();
@@ -21,7 +21,7 @@ public class AdministradorGRModel extends Conexion {
 				
 				administradorGR.setId(rs.getString("industry_id"));
 				administradorGR.setNombreRubro(rs.getString("industry"));
-				administradorGR.setEstatusRubro(rs.getString("industry_status_id"));
+				administradorGR.setEstatusRubro(rs.getString("industry_status"));
 				lista.add(administradorGR);
 			}
 			this.desconectar();
@@ -38,7 +38,7 @@ public class AdministradorGRModel extends Conexion {
 	public int insertarRubro(AdministradorGR miGR) throws SQLException {
 		try {
 			int filasAfectadas = 0;
-			String sql = "CALL sp_insertarRubro(?,?,?)";
+			String sql = "CALL CreateIndustry(?,?,?)";
 			this.conectar();
 			cs = conexion.prepareCall(sql);
 			cs.setString(1, miGR.getId());
@@ -58,7 +58,7 @@ public class AdministradorGRModel extends Conexion {
 	public int eliminarRubro(String codigo) throws SQLException {
 		try {
 			int filasAfectadas = 0;
-			String sql = "CALL sp_desactivarRubro(?)";
+			String sql = "CALL DeactivateIndustry(?)";
 			this.conectar();
 			cs = conexion.prepareCall(sql);
 			cs.setString(1, codigo);
@@ -76,7 +76,7 @@ public class AdministradorGRModel extends Conexion {
 	public int modificarRubro(AdministradorGR rubro) throws SQLException {
 		try {
 			int filasAfectadas = 0;
-			String sql = "CALL sp_modificarRubro(?,?,?)";
+			String sql = "CALL ModifyIndustry(?,?,?)";
 			this.conectar();
 			cs = conexion.prepareCall(sql);
 			cs.setString(1, rubro.getId());
@@ -94,7 +94,7 @@ public class AdministradorGRModel extends Conexion {
 
 	public AdministradorGR obtenerRubro(String codigo) throws SQLException {
 		try {
-			String sql = "CALL sp_obtenerRubro(?)";
+			String sql = "CALL SelectIndustryById(?)";
 			this.conectar();
 			cs = conexion.prepareCall(sql);
 			cs.setString(1, codigo);
@@ -104,7 +104,7 @@ public class AdministradorGRModel extends Conexion {
 				
 				obtRubro.setId(rs.getString("industry_id"));
 				obtRubro.setNombreRubro(rs.getString("industry"));
-				obtRubro.setEstatusRubro(rs.getString("industry_status_id"));
+				obtRubro.setEstatusRubro(rs.getString("industry_status"));
 				this.desconectar();
 				return obtRubro;
 			}
