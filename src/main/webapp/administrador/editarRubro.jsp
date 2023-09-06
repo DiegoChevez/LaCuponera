@@ -59,18 +59,15 @@ glyphicon-asterisk"></span></span>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="contacto">Nacionalidad del autor:</label>
-						<div class="input-group">
-							<input type="text" class="form-control" id="contacto"
-								value="${rubro.estatusRubro}" name="estatus"
-								placeholder="Ingresa la nacionali-
-28
-dad del autor">
-							<span class="input-group-addon"><span
-								class="glyphicon
-glyphicon-asterisk"></span></span>
-						</div>
-					</div>
+    <div class="form-group">
+    <label for="estatusRubro">Estatus del Rubro:</label>
+    <div class="input-group">
+        <select class="form-control" id="estatusRubro" name="estatus">
+            <option value="INACTIVA" ${rubro.estatusRubro == 'INACTIVA' ? 'selected' : ''}>INACTIVA</option>
+            <option value="ACTIVA" ${rubro.estatusRubro == 'ACTIVA' ? 'selected' : ''}>ACTIVA</option>
+        </select>
+    </div>
+</div>
 
 					<input type="submit" class="btn btn-info" value="Guardar"
 						name="Guardar"> <a class="btn btn-danger"

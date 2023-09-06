@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -53,11 +54,24 @@ public class AdministradorGCController extends HttpServlet {
 			case "insertar":
 				break;
 			case "obtener":
+				obtener(request, response);
 				break;
 			case "modificar":
 				break;
 			case "eliminar":
 				eliminar(request, response);
+				break;
+			case "listarCD":
+				listarCD(request, response);
+				break;
+			case "listarCC":
+				listarCC(request, response);
+				break;
+			case "listarCV":
+				listarCV(request, response);
+				break;
+			case "activar":
+				activar(request, response);
 				break;
 			}
 		}
@@ -111,6 +125,43 @@ public class AdministradorGCController extends HttpServlet {
 		}
 	}
 	
+	private void listarCD(HttpServletRequest request, HttpServletResponse response) {
+	    try {
+	        String codigo = request.getParameter("codigo"); // Captura el parámetro "codigo"
+	        List<AdministradorC> listaC = modelo.listarCD(codigo); // Pasa el código como argumento
+	        request.setAttribute("listaC", listaC);
+	        request.getRequestDispatcher("/administrador/listarCD.jsp").forward(request, response);
+	    } catch (SQLException | ServletException | IOException ex) {
+	        Logger.getLogger(AdministradorGCController.class.getName()).log(Level.SEVERE, null, ex);
+	    }
+	}
+	
+	private void listarCC(HttpServletRequest request, HttpServletResponse response) {
+	    try {
+	        String codigo = request.getParameter("codigo"); // Captura el parámetro "codigo"
+	        
+	        List<AdministradorC> listaC = modelo.listarCC(codigo); // Pasa el código como argumento
+	        request.setAttribute("listaC", listaC);
+	        request.getRequestDispatcher("/administrador/listarCC.jsp").forward(request, response);
+	    } catch (SQLException | ServletException | IOException ex) {
+	        Logger.getLogger(AdministradorGCController.class.getName()).log(Level.SEVERE, null, ex);
+	    }
+	}
+	
+	
+	private void listarCV(HttpServletRequest request, HttpServletResponse response) {
+	    try {
+	        String codigo = request.getParameter("codigo"); // Captura el parámetro "codigo"
+	        
+	        List<AdministradorC> listaC = modelo.listarCV(codigo); // Pasa el código como argumento
+	        request.setAttribute("listaC", listaC);
+	        request.getRequestDispatcher("/administrador/listarCV.jsp").forward(request, response);
+	    } catch (SQLException | ServletException | IOException ex) {
+	        Logger.getLogger(AdministradorGCController.class.getName()).log(Level.SEVERE, null, ex);
+	    }
+	}
+	
+	
 	private void eliminar(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String codigo = request.getParameter("id");
@@ -127,12 +178,45 @@ public class AdministradorGCController extends HttpServlet {
 		}
 	}
 	
+	private void activar(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String codigo = request.getParameter("id");
+
+			if (modelo.activarRubro(codigo) > 0) {
+				
+				request.setAttribute("exito", "Autor eliminado exitosamente");
+			} else {
+				request.setAttribute("fracaso", "No se puede eliminar este autor x");
+			}
+			request.getRequestDispatcher("/administradorGC.do?op=listar").forward(request, response);
+		} catch (SQLException | ServletException | IOException ex) {
+			Logger.getLogger(AdministradorGCController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	
+	
 	private void listinac(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			request.setAttribute("listaClientes", modelo.listinac());
 			request.getRequestDispatcher("/administrador/listarClientesinac.jsp").forward(request, response);
 		} catch (SQLException | ServletException | IOException ex) {
 			Logger.getLogger(AdministradorGCController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+	
+	private void obtener(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String codigo = request.getParameter("id");
+			AdministradorGC miCliente = modelo.obtenerCliente(codigo);
+			
+			if (miCliente != null) {
+				request.setAttribute("rubro", miCliente);
+				request.getRequestDispatcher("/administrador/datosCliente.jsp").forward(request, response);
+			} else {
+				response.sendRedirect(request.getContextPath() + "/error404.jsp");
+			}
+		} catch (SQLException | IOException | ServletException ex) {
+			Logger.getLogger(AdministradorGRController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 	

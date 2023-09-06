@@ -28,6 +28,11 @@ if (role == null || !"ADMIN-7874".equals(role)) {
 		
 	<a class="btn btn-primary"
 		href="${pageContext.request.contextPath}/administradorGC.do?op=listar"><span
-		class="glyphicon glyphicon-edit"></span> Gestionar </a>
+		class="glyphicon glyphicon-edit"></span> Gestionar Clientes</a>
+		
+		
+		<a class="btn btn-primary"
+		href="${pageContext.request.contextPath}/administradorGEO.do?op=listar"><span
+		class="glyphicon glyphicon-edit"></span> Gestionar Empresas Ofertantes</a>
 </body>
 </html>

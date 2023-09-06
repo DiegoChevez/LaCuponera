@@ -68,7 +68,7 @@ public class Validaciones {
     }
     
     public static boolean esCodigoAutor(String cadena) {
-        Pattern pat = Pattern.compile("AUT[0-9]{3}");
+    	Pattern pat = Pattern.compile("[A-Z]{5}-[0-9]{4}");
         Matcher mat = pat.matcher(cadena);
         return mat.matches();
     }

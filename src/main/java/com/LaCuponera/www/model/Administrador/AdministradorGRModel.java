@@ -38,7 +38,7 @@ public class AdministradorGRModel extends Conexion {
 	public int insertarRubro(AdministradorGR miGR) throws SQLException {
 		try {
 			int filasAfectadas = 0;
-			String sql = "CALL CreateIndustry(?,?,?)";
+			String sql = "INSERT INTO industries (industry_id, industry, industry_status) VALUES (?, ?, ?)";
 			this.conectar();
 			cs = conexion.prepareCall(sql);
 			cs.setString(1, miGR.getId());
@@ -76,12 +76,12 @@ public class AdministradorGRModel extends Conexion {
 	public int modificarRubro(AdministradorGR rubro) throws SQLException {
 		try {
 			int filasAfectadas = 0;
-			String sql = "CALL ModifyIndustry(?,?,?)";
+			String sql = "UPDATE industries SET industry = ?,industry_status = ? WHERE industry_id = ?";
 			this.conectar();
 			cs = conexion.prepareCall(sql);
-			cs.setString(1, rubro.getId());
-			cs.setString(2, rubro.getNombreRubro());
-			cs.setString(3, rubro.getEstatusRubro());
+			cs.setString(1, rubro.getNombreRubro());
+			cs.setString(2, rubro.getEstatusRubro());
+			cs.setString(3, rubro.getId());
 			filasAfectadas = cs.executeUpdate();
 			this.desconectar();
 			return filasAfectadas;
@@ -94,7 +94,7 @@ public class AdministradorGRModel extends Conexion {
 
 	public AdministradorGR obtenerRubro(String codigo) throws SQLException {
 		try {
-			String sql = "CALL SelectIndustryById(?)";
+			String sql = "SELECT * FROM industries WHERE industry_id = ?";
 			this.conectar();
 			cs = conexion.prepareCall(sql);
 			cs.setString(1, codigo);

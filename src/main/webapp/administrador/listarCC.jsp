@@ -41,14 +41,16 @@ if (role == null || !"ADMIN-7874".equals(role)) {
 					</thead>
 					<tbody>
 
-						<c:forEach items="${requestScope.listaClientes}" var="rubros">
+						<c:forEach items="${requestScope.listaC}" var="rubros">
 							<tr>
 							
+								<td>${rubros.cuponId}</td>
+								<td>${rubros.offerId}</td>
 								<td>${rubros.customerId}</td>
-								<td>${rubros.userId}</td>
-								<td>${rubros.firstName}</td>
-								<td>${rubros.lastName}</td>
-								<td>${rubros.duiC}</td>
+								<td>${rubros.codeC}</td>
+								<td>${rubros.transactionId}</td>
+								<td>${rubros.couponStatus}</td>
+						
 
 
 								<td><a class="btn btn-primary"

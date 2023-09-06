@@ -24,16 +24,18 @@ if (role == null || !"ADMIN-7874".equals(role)) {
 		<div class="row">
 			<div class="col-md-10">
 				<a type="button" class="btn btn-primary btn-md"
-					href="${pageContext.request.contextPath}/administradorGC.do?op=listinac">
+					href="administradorGC.do?op=listar">
 					
-					Listar Inactivos</a> <br /> <br />
+					Atras</a> <br /> <br />
 				<table class="table table-striped table-bordered table-hover"
 					id="tabla">
 					<thead>
 						<tr>
-							<th>Id del rubro</th>
-							<th>Nombre del Rubro</th>
-							<th>Estado</th>
+							<th>Id de cliente</th>
+							<th>Id de usuario</th>
+							<th>Nombres</th>
+							<th>Apellidos</th>
+							<th>DUI</th>
 							<th>Operaciones</th>
 						</tr>
 					</thead>
@@ -44,12 +46,12 @@ if (role == null || !"ADMIN-7874".equals(role)) {
 							
 								<td>${rubros.customerId}</td>
 								<td>${rubros.userId}</td>
+								<td>${rubros.firstName}</td>
 								<td>${rubros.lastName}</td>
+								<td>${rubros.duiC}</td>
 
 
-								<td><a class="btn btn-primary"
-									href="${pageContext.request.contextPath}/administradorGR.do?op=obtener&id=${rubros.customerId}"><span
-										class="glyphicon glyphicon-edit"></span> Obtener información</a> <a
+								<td> <a
 									class="btn btn-danger"
 									href="javascript:eliminar('${rubros.customerId}')"><span
 										class="glyphicon glyphicontrash"></span> Eliminar</a></td>
@@ -77,7 +79,7 @@ if (role == null || !"ADMIN-7874".equals(role)) {
 			alertify.confirm("¿Realmente decea eliminar este Rubro?", function(
 					e) {
 				if (e) {
-					location.href = "administradorGC.do?op=eliminar&id=" + id;
+					location.href = "administradorGC.do?op=activar&id=" + id;
 				}
 			});
 		}

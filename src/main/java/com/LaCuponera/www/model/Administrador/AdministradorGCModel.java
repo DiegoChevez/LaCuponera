@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.LaCuponera.www.beans.Administrador.AdministradorC;
 import com.LaCuponera.www.beans.Administrador.AdministradorGC;
 import com.LaCuponera.www.model.Conexion;
 import com.mysql.jdbc.PreparedStatement;
@@ -73,6 +74,101 @@ public class AdministradorGCModel extends Conexion {
 	}
 	
 	
+	public List<AdministradorC> listarCD(String codigo) throws SQLException {
+	    try {
+	        List<AdministradorC> listaCD = new ArrayList<AdministradorC>();
+	        String sql = "SELECT * FROM coupons WHERE customer_id = ? AND coupon_status = 'DISPONIBLE'";
+	        this.conectar();
+	        cs = conexion.prepareCall(sql);
+	        cs.setString(1, codigo); // Establece el parámetro "codigo" en la consulta
+	        rs = cs.executeQuery();
+
+	        while (rs.next()) {
+	            AdministradorC administradorC = new AdministradorC();
+	            
+	            administradorC.setCuponId(rs.getString("coupon_id"));
+				administradorC.setOfferId(rs.getString("offer_id"));
+				administradorC.setCustomerId(rs.getString("customer_id"));
+				administradorC.setCodeC(rs.getString("code"));
+				administradorC.setTransactionId(rs.getString("transaction_id"));
+				administradorC.setCouponStatus(rs.getString("coupon_status"));
+
+	            // ...
+	            listaCD.add(administradorC);
+	        }
+	        this.desconectar();
+	        return listaCD;
+	    } catch (SQLException ex) {
+	        Logger.getLogger(AdministradorGCModel.class.getName()).log(Level.SEVERE, null, ex);
+	        this.desconectar();
+	        return null;
+	    }
+	}
+	
+	public List<AdministradorC> listarCC(String codigo) throws SQLException {
+	    try {
+	        List<AdministradorC> listaCD = new ArrayList<AdministradorC>();
+	        String sql = "SELECT * FROM coupons WHERE customer_id = ? AND coupon_status = 'NO DISPONI'";
+	        this.conectar();
+	        cs = conexion.prepareCall(sql);
+	        cs.setString(1, codigo); // Establece el parámetro "codigo" en la consulta
+	        rs = cs.executeQuery();
+
+	        while (rs.next()) {
+	            AdministradorC administradorC = new AdministradorC();
+	            
+	            administradorC.setCuponId(rs.getString("coupon_id"));
+				administradorC.setOfferId(rs.getString("offer_id"));
+				administradorC.setCustomerId(rs.getString("customer_id"));
+				administradorC.setCodeC(rs.getString("code"));
+				administradorC.setTransactionId(rs.getString("transaction_id"));
+				administradorC.setCouponStatus(rs.getString("coupon_status"));
+
+	            // ...
+	            listaCD.add(administradorC);
+	        }
+	        this.desconectar();
+	        return listaCD;
+	    } catch (SQLException ex) {
+	        Logger.getLogger(AdministradorGCModel.class.getName()).log(Level.SEVERE, null, ex);
+	        this.desconectar();
+	        return null;
+	    }
+	}
+	
+	public List<AdministradorC> listarCV(String codigo) throws SQLException {
+	    try {
+	        List<AdministradorC> listaCD = new ArrayList<AdministradorC>();
+	        String sql = "SELECT * FROM coupons WHERE customer_id = ? AND coupon_status = 'VENCIDO'";
+	        this.conectar();
+	        cs = conexion.prepareCall(sql);
+	        cs.setString(1, codigo); // Establece el parámetro "codigo" en la consulta
+	        rs = cs.executeQuery();
+
+	        while (rs.next()) {
+	            AdministradorC administradorC = new AdministradorC();
+	            
+	            administradorC.setCuponId(rs.getString("coupon_id"));
+				administradorC.setOfferId(rs.getString("offer_id"));
+				administradorC.setCustomerId(rs.getString("customer_id"));
+				administradorC.setCodeC(rs.getString("code"));
+				administradorC.setTransactionId(rs.getString("transaction_id"));
+				administradorC.setCouponStatus(rs.getString("coupon_status"));
+
+	            // ...
+	            listaCD.add(administradorC);
+	        }
+	        this.desconectar();
+	        return listaCD;
+	    } catch (SQLException ex) {
+	        Logger.getLogger(AdministradorGCModel.class.getName()).log(Level.SEVERE, null, ex);
+	        this.desconectar();
+	        return null;
+	    }
+	}
+	
+	
+	
 	public int eliminarRubro(String codigo) throws SQLException {
 	    try {
 	        int filasAfectadas = 0;
@@ -94,6 +190,60 @@ public class AdministradorGCModel extends Conexion {
 	    }
 	}
 	
+	public int activarRubro(String codigo) throws SQLException {
+	    try {
+	        int filasAfectadas = 0;
+	        String sql = "UPDATE customers " +
+                    "INNER JOIN users ON customers.user_id = users.user_id " +
+                    "SET customers.customer_status = 'ACTIVO', users.user_status = 'ACTIVO' " +
+                    "WHERE customers.customer_id = ?";
+	        this.conectar();
+	        cs = conexion.prepareCall(sql);
+	        cs.setString(1, codigo);
+	        filasAfectadas = cs.executeUpdate();
+	        
+	        this.desconectar();
+	        return filasAfectadas;
+	    } catch (SQLException ex) {
+	        Logger.getLogger(AdministradorGRModel.class.getName()).log(Level.SEVERE, null, ex);
+	        this.desconectar();
+	        return 0;
+	    }
+	}
+	
+	public AdministradorGC obtenerCliente(String codigo) throws SQLException {
+		try {
+			String sql = "SELECT * FROM customers WHERE customer_id = ?";
+			this.conectar();
+			cs = conexion.prepareCall(sql);
+			cs.setString(1, codigo);
+			rs = cs.executeQuery();
+			if (rs.next()) {
+				AdministradorGC obtRubro = new AdministradorGC();
+			
+				
+				obtRubro.setCustomerId(rs.getString("customer_id"));
+				obtRubro.setUserId(rs.getString("user_id"));
+				obtRubro.setFirstName(rs.getString("first_name"));
+				obtRubro.setLastName(rs.getString("last_name"));
+				obtRubro.setPhoneC(rs.getString("phone"));
+				obtRubro.setMailC(rs.getString("email"));
+				obtRubro.setAddressC(rs.getString("address"));
+				obtRubro.setDuiC(rs.getString("dui"));
+				obtRubro.setStatusC(rs.getString("customer_status"));
+				
+				this.desconectar();
+				return obtRubro;
+			}
+			this.desconectar();
+			return null;
+		} catch (SQLException ex) {
+			Logger.getLogger(AdministradorGCModel.class.getName()).log(Level.SEVERE, null, ex);
+			this.desconectar();
+			return null;
+		}
+	}
+
 	
 /*
 	public int insertarRubro(AdministradorGR miGR) throws SQLException {

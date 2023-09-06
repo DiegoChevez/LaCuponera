@@ -124,7 +124,7 @@ public class AdministradorGRController extends HttpServlet {
 			if (Validaciones.isEmpty(miGR.getId())) {
 				listaErrores.add("El ID del Rubro es obligatorio");
 			} else if (!Validaciones.esCodigoAutor(miGR.getId())) {
-				listaErrores.add("El ID del Rubro debe tener el formato correcto AUT000");
+				listaErrores.add("El ID del Rubro debe tener el formato correcto AAAAA-2576");
 			}
 			if (Validaciones.isEmpty(miGR.getNombreRubro())) {
 				listaErrores.add("El nombre del Rubro es obligatorio");
@@ -161,8 +161,9 @@ public class AdministradorGRController extends HttpServlet {
 				request.setAttribute("rubro", miRubro);
 				request.getRequestDispatcher("/administrador/editarRubro.jsp").forward(request, response);
 			} else {
-				response.sendRedirect(request.getContextPath() + "/error404.jsp");
+
 			}
+			
 		} catch (SQLException | IOException | ServletException ex) {
 			Logger.getLogger(AdministradorGRController.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -180,7 +181,7 @@ public class AdministradorGRController extends HttpServlet {
 			if (Validaciones.isEmpty(miRubro.getId())) {
 				listaErrores.add("El codigo del autor es obligatorio");
 			} else if (!Validaciones.esCodigoAutor(miRubro.getId())) {
-				listaErrores.add("El codigo de la autor debe tener el formato correcto AUT000");
+				listaErrores.add("El codigo de la autor debe tener el formato correcto AAAA12345");
 			}
 			if (Validaciones.isEmpty(miRubro.getNombreRubro())) {
 				listaErrores.add("El nombre del autor es obligatorio");

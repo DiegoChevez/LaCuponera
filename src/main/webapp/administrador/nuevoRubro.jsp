@@ -2,8 +2,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     // Verifica si la sesión existe y si tiene el rol ADGRL-1586
-    String role = (String) session.getAttribute("role");
-    if (role == null || !"ADGRL-1586".equals(role)) {
+    String role = (String) session.getAttribute("role_id");
+    if (role == null || !"ADMIN-7874".equals(role)) {
         // Si no tiene el rol, redirige al usuario al formulario de inicio de sesión
         response.sendRedirect(request.getContextPath() + "/index.jsp");
     }
@@ -66,7 +66,7 @@ glyphicon-asterisk"></span></span>
 					<div class="form-group">
 						<label for="contacto">Nacionalidad del autor:</label>
 						<div class="input-group">
-							<input type="hidden" class="form-control" id="contacto" value="APR1-45289"
+							<input type="hidden" class="form-control" id="contacto" value="ACTIVA"
 								 name="estatus"
 								placeholder="Ingresa la nacionalidad del autor"> <span
 								class="input-group-addon"><span
@@ -77,7 +77,7 @@ glyphicon-asterisk"></span></span>
 
 					<input type="submit" class="btn btn-info" value="Guardar"
 						name="Guardar"> <a class="btn btn-danger"
-						href="${pageContext.request.contextPath}/autores.do?op=listar">Cancelar</a>
+						href="${pageContext.request.contextPath}/administradorGR.do?op=listar">Cancelar</a>
 				</form>
 			</div>
 		</div>
