@@ -12,7 +12,7 @@ public class AdministradorGRModel extends Conexion {
 	public List<AdministradorGR> listarRubros() throws SQLException {
 		try {
 			List<AdministradorGR> lista = new ArrayList<AdministradorGR>();
-			String sql = "CALL SelectIndustriesList()";
+			String sql = "SELECT * FROM industries";
 			this.conectar();
 			cs = conexion.prepareCall(sql);
 			rs = cs.executeQuery();
@@ -58,7 +58,7 @@ public class AdministradorGRModel extends Conexion {
 	public int eliminarRubro(String codigo) throws SQLException {
 		try {
 			int filasAfectadas = 0;
-			String sql = "CALL DeactivateIndustry(?)";
+			String sql = "UPDATE industries SET industry_status = 'INACTIVA' WHERE industry_id = ?";
 			this.conectar();
 			cs = conexion.prepareCall(sql);
 			cs.setString(1, codigo);
