@@ -24,41 +24,34 @@ if (role == null || !"ADMIN-7874".equals(role)) {
 		<div class="row">
 			<div class="col-md-10">
 				<a type="button" class="btn btn-primary btn-md"
-					href="${pageContext.request.contextPath}/administradorGEO.do?op=nuevo">
-					
-					Listar Inactivos</a> <br /> <br />
+					href="${pageContext.request.contextPath}/administradorGR.do?op=nuevo">
+					Nuevo Rubro</a> <br /> <br />
 				<table class="table table-striped table-bordered table-hover"
 					id="tabla">
 					<thead>
 						<tr>
-							<th>Id de cliente</th>
-							<th>Id de usuario</th>
-							<th>Nombres</th>
-							<th>Apellidos</th>
-							<th>DUI</th>
+							<th>Id del rubro</th>
+							<th>Nombre del Rubro</th>
+							<th>Estado</th>
 							<th>Operaciones</th>
 						</tr>
 					</thead>
 					<tbody>
 
-						<c:forEach items="${requestScope.listaC}" var="rubros">
+						<c:forEach items="${requestScope.listaOA}" var="rubros">
 							<tr>
-							
-								<td>${rubros.cuponId}</td>
-								<td>${rubros.offerId}</td>
-								<td>${rubros.customerId}</td>
-								<td>${rubros.codeC}</td>
-								<td>${rubros.transactionId}</td>
-								<td>${rubros.couponStatus}</td>
-						
+
+								<td>${rubros.ofertaId}</td>
+								<td>${rubros.companyId}</td>
+								<td>${rubros.tituloOferta}</td>
 
 
 								<td><a class="btn btn-primary"
-									href="${pageContext.request.contextPath}/administradorGC.do?op=obtener&id=${rubros.customerId}"><span
-										class="glyphicon glyphicon-edit"></span> Obtener información</a> <a
+									href="${pageContext.request.contextPath}/administradorGR.do?op=obtener&id=${rubros.ofertaId}"><span
+										class="glyphicon glyphicon-edit"></span> Editar</a> <a
 									class="btn btn-danger"
-									href="javascript:eliminar('${rubros.customerId}')"><span
-										class="glyphicon glyphicontrash"></span> Eliminar</a></td>
+									href="javascript:eliminar('${rubros.ofertaId}')"><span
+										class="glyphicon glyphicontrash"></span> Aprobar</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -67,6 +60,7 @@ if (role == null || !"ADMIN-7874".equals(role)) {
 
 		</div>
 	</div>
+	
 	<script>
 		$(document).ready(function() {
 			$('#tabla').DataTable();
@@ -80,10 +74,10 @@ if (role == null || !"ADMIN-7874".equals(role)) {
 		<c:set var="fracaso" value="" scope="session" />
 		</c:if>
 		function eliminar(id) {
-			alertify.confirm("¿Realmente decea eliminar este Rubro?", function(
+			alertify.confirm("¿Realmente decea aprobar este Rubro?", function(
 					e) {
 				if (e) {
-					location.href = "administradorGC.do?op=eliminar&id=" + id;
+					location.href = "administradorGEO.do?op=aprobar&id=" + id;
 				}
 			});
 		}

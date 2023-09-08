@@ -4,7 +4,8 @@
 // Verifica si la sesión existe y si tiene el rol ADGRL-1586
 String role = (String) session.getAttribute("role_id");
 String user_id = (String) session.getAttribute("user_id");
-if (role == null || !"ADMIN-7874".equals(role)) {
+String status = (String) session.getAttribute("status");
+if ("INACTIVO".equals(status) || !"ADMIN-7874".equals(role)) {
 	// Si no tiene el rol, redirige al usuario al formulario de inicio de sesión
 	response.sendRedirect(request.getContextPath() + "/index.jsp");
 }
